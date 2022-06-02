@@ -33,7 +33,7 @@
       "command": "./build/prof",
       "args": [],
       "dependsOn": [
-        "CMAKE build"
+        "CMAKE: build"
       ],
       "group": "build",
       "presentation": {
