@@ -1,0 +1,44 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "CMAKE: generate build system",
+      "command": "cmake",
+      "args": [
+        "."
+      ],
+      "group": "build",
+      "presentation": {
+        "clear": true
+      }
+    },
+    {
+      "type": "shell",
+      "label": "CMAKE: build",
+      "command": "cmake",
+      "args": [
+        "--build",
+        ".",
+        "--verbose"
+      ],
+      "group": "build",
+      "presentation": {
+        "clear": true
+      }
+    },
+    {
+      "type": "shell",
+      "label": "CMAKE: build and run",
+      "command": "./build/prof",
+      "args": [],
+      "dependsOn": [
+        "CMAKE build"
+      ],
+      "group": "build",
+      "presentation": {
+        "clear": true
+      }
+    }
+  ]
+}

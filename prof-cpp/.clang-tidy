@@ -1,0 +1,51 @@
+---
+# activate all checks except controversial ones:
+#
+# -fuchsia-*
+#     it doesn't allow to override operator==, etc.
+# -llvmlibc-*
+# -altera-*
+#     don't know what to do with it, just silence for now
+# -llvm-header-guard
+#     it forces to add long header guard instead of simple '#pragma once'
+# -google-readability-namespace-comments
+# -llvm-namespace-comment
+#     closing comments for namespaces seems unnecessary in case there's no 
+#     nested namespaces
+# -misc-non-private-member-variables-in-classes
+#     it prevents creating struct with constructor and public fields,
+#     as it requires to hide fields under private and expose them through
+#     getter/setter methods, which is too much for struct which actually
+#     doesn't need incapsulation
+# -cppcoreguidelines-special-member-functions
+# -hicpp-special-member-functions
+#     it forces to define all special member function for class
+#     (copy/move, ctr/assignment, destr), when you have only one of those,
+#     which looks unnecessary when eg. you need custom destructor only
+# -hicpp-signed-bitwise
+#     it prevents bitwise AND-operator on signed integers, while those are
+#     defined in third party headers (opengl), so I can't change their types.
+#     and I don't want to static_cast them either
+# -cppcoreguidelines-avoid-magic-numbers
+# -readability-magic-numbers
+#     good check overall, but I don't want to bother with constants in this proj
+# -cppcoreguidelines-pro-bounds-array-to-pointer-decay
+#     it's a duplicate of 'hicpp-no-array-decay' check
+# -misc-no-recursion
+#     recursion is ok for this small prototype project
+Checks: >
+  *,
+  -fuchsia-*,
+  -llvmlibc-*,
+  -altera-*,
+  -llvm-header-guard,
+  -google-readability-namespace-comments,
+  -llvm-namespace-comment,
+  -misc-non-private-member-variables-in-classes,
+  -cppcoreguidelines-special-member-functions,
+  -hicpp-special-member-functions,
+  -hicpp-signed-bitwise,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -readability-magic-numbers,
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+  -misc-no-recursion,

@@ -1,0 +1,21 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+{
+	"name": "prof-cpp",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+			"VARIANT": "ubuntu-22.04"
+		}
+	},
+	"runArgs": [
+		"--cap-add=SYS_PTRACE",
+		"--security-opt",
+		"seccomp=unconfined"
+	],
+	"settings": {},
+	"extensions": [
+		"ms-vscode.cpptools-extension-pack",
+		"notskm.clang-tidy", // clang-tidy support
+		"eamodio.gitlens"
+	]
+}
