@@ -1,0 +1,11 @@
+{
+	"name": "prof-viewer",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"extensions": [
+		"eamodio.gitlens",
+		"dbaeumer.vscode-eslint",
+		"ms-vscode.vscode-typescript-tslint-plugin"
+	]
+}
