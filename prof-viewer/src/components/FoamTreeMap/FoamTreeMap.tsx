@@ -1,33 +1,24 @@
-import React, {useCallback, useEffect, useRef} from 'react';
 // eslint-disable-next-line
-// @ts-ignore because the lib doesn't provide typings
+// @ts-nocheck because FoamTree lib doesn't provide typings
+import React, {useCallback, useEffect, useRef, memo} from 'react';
 import FoamTree from '@carrotsearch/foamtree';
 import classes from './FoamTreeMap.module.css';
-import FoamTreeMapData from '../../models/FoamTreeMapData';
+import buildFoamTreeMapData from './buildFoamTreeMapData';
 
 interface Props {
-  data: FoamTreeMapData;
+  profile: Profile;
 }
 
-export default function FoamTreeMap(props: Props) {
+// FoamTree API reference: https://get.carrotsearch.com/foamtree/latest/api/
+function FoamTreeMap(props: Props) {
   const elementRef = useRef<HTMLDivElement>(null);
-
   const treeRef = useRef<Record<string, unknown> | null>(null);
-
-  const onWindowResize = useCallback(() => {
-    if (treeRef.current) {
-      // eslint-disable-next-line
-      // @ts-ignore
-      treeRef.current.resize();
-    }
-  }, []);
 
   useEffect(() => {
     if (!FoamTree.supported) {
       alert("FoamTree doesn't support this browser");
     }
 
-    // API reference: https://get.carrotsearch.com/foamtree/latest/api/
     treeRef.current = new FoamTree({
       element: elementRef.current,
       layout: 'squarified',
@@ -40,8 +31,14 @@ export default function FoamTreeMap(props: Props) {
       groupExposureZoomMargin: 0.2,
       zoomMouseWheelDuration: 300,
       openCloseDuration: 200,
-      dataObject: props.data,
+      dataObject: buildFoamTreeMapData(props.profile),
     });
+  }, []);
+
+  const onWindowResize = useCallback(() => {
+    if (treeRef.current) {
+      treeRef.current.resize();
+    }
   }, []);
 
   useEffect(() => {
@@ -51,3 +48,5 @@ export default function FoamTreeMap(props: Props) {
 
   return <div className={classes.root} ref={elementRef} />;
 }
+
+export default memo(FoamTreeMap);
