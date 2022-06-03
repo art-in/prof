@@ -1,2 +1,2 @@
 # hide third-party libs from github lang stats
-prof-cpp/libs/* linguist-vendored
+libs/* linguist-vendored

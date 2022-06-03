@@ -2,8 +2,10 @@
 
 #include <chrono>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <json.hpp>
+#include <optional>
 #include <stack>
 #include <string>
 #include <vector>
@@ -29,7 +31,10 @@ class Profile {
   void startTask(std::string name);
   void finishTask();
 
+  [[nodiscard]] auto rootTask() const
+      -> std::optional<std::reference_wrapper<const TaskInfo>>;
   void serialize(std::ostream& out) const;
+  void reset();
 
  private:
   std::stack<TaskInfo> tasks;
@@ -45,6 +50,9 @@ class Task {
   ~Task();
 };
 
+auto rootTask() -> std::optional<std::reference_wrapper<const TaskInfo>>;
 void serialize(std::ostream& out);
+void serializeToFile(const std::string& filePath);
+void reset();
 
 }  // namespace prof

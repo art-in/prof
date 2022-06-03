@@ -1,15 +1,9 @@
 #include <iostream>
+#include <test-runner.hpp>
 
-#include "prof.hpp"
+void TestProf(TestRunner*);
 
 auto main() -> int {
-  // TODO: add unit tests
-  {
-    PROFILE_TASK("A");
-
-    { PROFILE_TASK("B"); }
-    { PROFILE_TASK("C"); }
-  }
-
-  prof::serialize(std::cout);
+  TestRunner trun;
+  TestProf(&trun);
 }

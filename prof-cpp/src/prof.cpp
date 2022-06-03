@@ -34,11 +34,28 @@ void Profile::finishTask() {
   }
 }
 
+auto Profile::rootTask() const
+    -> std::optional<std::reference_wrapper<const TaskInfo>> {
+  if (tasks.empty()) {
+    return std::nullopt;
+  }
+
+  return std::cref(tasks.top());
+}
+
 void Profile::serialize(std::ostream& out) const {
+  if (tasks.size() != 1) {
+    // make sure recorded tasks exist and all of them are completed,
+    // in this case singe root task should lay on top of the stack
+    return;
+  }
+
   nlohmann::ordered_json json;
   serializeRecursively(tasks.top(), json);
   out << std::setw(2) << json;
 }
+
+void Profile::reset() { tasks = {}; }
 
 void Profile::serializeRecursively(const TaskInfo& task,
                                    nlohmann::ordered_json& json) const {
@@ -58,6 +75,17 @@ Task::Task(std::string name) { Profile::instance().startTask(std::move(name)); }
 
 Task::~Task() { Profile::instance().finishTask(); }
 
+auto rootTask() -> std::optional<std::reference_wrapper<const TaskInfo>> {
+  return Profile::instance().rootTask();
+}
+
 void serialize(std::ostream& out) { Profile::instance().serialize(out); }
+
+void serializeToFile(const std::string& filePath) {
+  std::ofstream fout{filePath};
+  Profile::instance().serialize(fout);
+}
+
+void reset() { Profile::instance().reset(); }
 
 }  // namespace prof
