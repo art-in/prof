@@ -104,6 +104,87 @@ describe('drawTreeMap', () => {
       },
     },
     {
+      description: 'zero duration task',
+      profile: {
+        name: 'root',
+        duration_ns: 10,
+        children: [
+          {
+            name: 'A',
+            duration_ns: 10,
+          },
+          {
+            name: 'B',
+            duration_ns: 0,
+          },
+        ],
+      },
+    },
+    {
+      description: 'multiple small tasks - 5',
+      profile: {
+        name: 'root',
+        duration_ns: 10,
+        children: [
+          {
+            name: 'A',
+            duration_ns: 5,
+          },
+          ...new Array(5)
+            .fill(true)
+            .map((_, idx) => ({name: `B-${idx}`, duration_ns: 1})),
+        ],
+      },
+    },
+    {
+      description: 'multiple small tasks - 50',
+      profile: {
+        name: 'root',
+        duration_ns: 100,
+        children: [
+          {
+            name: 'A',
+            duration_ns: 50,
+          },
+          ...new Array(50)
+            .fill(true)
+            .map((_, idx) => ({name: `B-${idx}`, duration_ns: 1})),
+        ],
+      },
+    },
+    {
+      description: 'multiple small tasks - 500',
+      profile: {
+        name: 'root',
+        duration_ns: 1000,
+        children: [
+          {
+            name: 'A',
+            duration_ns: 500,
+          },
+          ...new Array(500)
+            .fill(true)
+            .map((_, idx) => ({name: `B-${idx}`, duration_ns: 1})),
+        ],
+      },
+    },
+    {
+      description: 'multiple small tasks - 5000',
+      profile: {
+        name: 'root',
+        duration_ns: 10000,
+        children: [
+          {
+            name: 'A',
+            duration_ns: 5000,
+          },
+          ...new Array(5000)
+            .fill(true)
+            .map((_, idx) => ({name: `B-${idx}`, duration_ns: 1})),
+        ],
+      },
+    },
+    {
       description: 'complex',
       profile: {
         name: 'root',
@@ -139,11 +220,15 @@ describe('drawTreeMap', () => {
             children: [
               {
                 name: 'B-A',
-                duration_ns: 125,
+                duration_ns: 50,
               },
               {
                 name: 'B-B',
-                duration_ns: 125,
+                duration_ns: 50,
+              },
+              {
+                name: 'B-C',
+                duration_ns: 150,
               },
             ],
           },
